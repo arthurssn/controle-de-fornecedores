@@ -10,10 +10,10 @@ fornecedores.
 
 ## Funcionalidades
 
-- Cadastro de fornecedores
-- Visualização de fornecedores cadastrados
-- Edição de informações de fornecedores
-- Exclusão de fornecedores
+-   Cadastro de fornecedores
+-   Visualização de fornecedores cadastrados
+-   Edição de informações de fornecedores
+-   Exclusão de fornecedores
 
 ## Como usar
 
@@ -29,19 +29,19 @@ git clone https://github.com/arthurssn/controle-de-fornecedores.git
 cd controle-de-fornecedores
 ```
 
-3. Iniciar aplicação:
+3. Copie o arquivo .env.example para .env:
+
+```bash
+cp .env.example .env
+```
+
+4. Iniciar aplicação:
 
 ```bash
 docker-compose up --build
 ```
 
-4. Crie um banco de dados, de prerência chamado 'control'. Se for diferente, altere o arquivo .env.
-
-5. Copie o arquivo .env.example para .env:
-
-```bash
-cp .env.example .env
-```
+5. Crie um banco de dados, de prerência chamado 'control'. Se for diferente, altere o arquivo .env.
 
 6. Execute as migrações e semeie o banco de dados:
 
@@ -69,4 +69,4 @@ npm run dev
 
 8. Acesse a aplicação em seu navegador:
 
-   [http://localhost:8001](http://localhost:8001)
+    [http://localhost:8001](http://localhost:8001)
