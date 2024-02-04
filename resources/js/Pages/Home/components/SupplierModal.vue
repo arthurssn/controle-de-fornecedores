@@ -1,20 +1,24 @@
 <script setup lang="ts">
 import Modal from "@/components/Modal/Modal.vue";
 import Input from "@/components/Forms/Input.vue";
-import {reactive} from "vue";
+import {PropType, Ref, ref, UnwrapRef, watch} from "vue";
 import axios from "axios";
 import Swal from 'sweetalert2'
 
-defineProps({
+const props = defineProps({
   modalOpen: {
     type: Boolean,
     default: false
   },
+  supplier: {
+    type: Object as PropType<ISupplier>,
+    default: null
+  }
 })
 
 const emit = defineEmits(['update:modalOpen']);
 
-const form: ISupplier = reactive({
+const form: Ref<UnwrapRef<ISupplier>> = ref({
   name: '',
   cpf_cnpj: '',
   email: '',
@@ -25,6 +29,11 @@ const form: ISupplier = reactive({
   number: '',
   country: 'Brasil',
 })
+
+watch(() => props.supplier, (value) => {
+  if (Object.keys(value).length)
+    form.value = value;
+}, {deep: true})
 
 function createSupplier() {
   axios.post('/api/suppliers', form)

@@ -10,15 +10,23 @@
         </button>
       </div>
       <hr class="h-px my-2 bg-blue-100 border-0 dark:bg-blue-300">
-      <Filter :query-params="queryParams"
-              @change-query="queryParams = $event"/>
-      <SuppliersTable :suppliers="suppliers.data" @get-suppliers="getSuppliersOrdered"
-                      :order-type="queryParams.orderType"/>
-      <Pagination :pagination-data="suppliers"
-                  @select-item="getSuppliers($event.url)"/>
+      <Filter
+          :query-params="queryParams"
+          @change-query="queryParams = $event"
+      />
+      <SuppliersTable
+          :suppliers="suppliers.data"
+          @get-suppliers="getSuppliersOrdered"
+          :order-type="queryParams.orderType"
+          @select-supplier="onSelectSupplier"
+      />
+      <Pagination
+          :pagination-data="suppliers"
+          @select-item="getSuppliers($event.url)"
+      />
     </div>
   </Main>
-  <SupplierModal :modal-open="modalOpen" @update:modalOpen="modalOpen = $event"/>
+  <SupplierModal :modal-open="modalOpen" @update:modalOpen="modalOpen = $event" :supplier="supplierSelected"/>
 </template>
 
 <script setup lang="ts">
@@ -30,6 +38,7 @@ import Main from "@/layout/Main.vue";
 import axios from "axios";
 import Filter from "@/Pages/Home/components/Filter.vue";
 import SupplierModal from "@/Pages/Home/components/SupplierModal.vue";
+import Swal from "sweetalert2";
 
 interface ISupplierResponse {
   current_page?: string,
@@ -49,6 +58,7 @@ const suppliers: Ref<UnwrapRef<ISupplierResponse>> = ref({} as ISupplierResponse
 const currentUrl: Ref<string> = ref('');
 const queryParams: Ref<UnwrapRef<IQueryParams>> = ref({} as IQueryParams);
 const modalOpen = ref(false);
+const supplierSelected: ISupplier = ref({} as ISupplier);
 
 watch(() => queryParams.value, (value) => {
   getSuppliers(currentUrl.value, value);
@@ -59,15 +69,23 @@ onMounted(() => getSuppliers())
 async function getSuppliers(url: string = '', params: IQueryParams = {} as IQueryParams) {
   currentUrl.value = url.length ? url : '/api/suppliers';
   queryParams.value = Object.keys(params).length > 0 ? params : queryParams.value;
-  let {data}: ISupplierResponse = await axios.get(currentUrl.value, {params: queryParams.value});
-  if (queryParams.value.cnpj) {
-    suppliers.value = {
-      data: [data]
-    };
-    return;
-    ''
+  try {
+    let {data}: ISupplierResponse = await axios.get(currentUrl.value, {params: queryParams.value});
+    if (queryParams.value.cnpj) {
+      suppliers.value = {
+        data: [data]
+      };
+      return;
+      ''
+    }
+    suppliers.value = data;
+  } catch (e) {
+    Swal.fire({
+      title: 'Erro ao buscar fornecedores',
+      text: 'Tente novamente mais tarde: ' + e.response.data.message,
+      icon: 'error'
+    })
   }
-  suppliers.value = data;
 }
 
 async function getSuppliersOrdered(params: IQueryParams = {} as IQueryParams) {
@@ -75,6 +93,14 @@ async function getSuppliersOrdered(params: IQueryParams = {} as IQueryParams) {
   queryParams.value = {...params, numberOfItemsPerPage: queryParams.value.numberOfItemsPerPage};
   const {data}: ISupplierResponse = await axios.get(currentUrl.value, {params: queryParams.value});
   suppliers.value = data;
+}
+
+function onSelectSupplier(event) {
+  console.log(event)
+  if (event.action === 'edit') {
+    modalOpen.value = true;
+    supplierSelected.value = event.supplier;
+  }
 }
 
 </script>

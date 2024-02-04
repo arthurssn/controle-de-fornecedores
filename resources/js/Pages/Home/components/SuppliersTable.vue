@@ -64,6 +64,10 @@
         </td>
         <td class="px-6 py-4 text-right">
           <button
+              @click="emit('selectSupplier', {
+                action: 'edit',
+                supplier: supplier
+              })"
               class="font-semibold text-blue-600 dark:text-blue-500 hover:underline p-2 bg-white rounded-md"
           > {{ supplier.external ? 'Visualizar' : 'Editar' }}
           </button
@@ -99,5 +103,5 @@ defineProps({
   },
 });
 
-const emit = defineEmits(["getSuppliers"]);
+const emit = defineEmits(["getSuppliers", 'selectSupplier']);
 </script>
