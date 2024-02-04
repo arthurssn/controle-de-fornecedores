@@ -8,5 +8,5 @@ interface ISupplier {
     "state": string
     "country": string,
     "number": string,
-    "external": boolean
+    "external"?: boolean
 }

@@ -38,7 +38,8 @@ class SupplierRequest extends FormRequest
     {
         return [
             'cpf_cnpj.required' => 'O campo CPF/CNPJ é obrigatório',
-            'name.required' => 'O campo nome é obrigatório'
+            'name.required' => 'O campo nome é obrigatório',
+            'cpf_cnpj.unique' => 'CPF/CNPJ já cadastrado',
         ];
     }
 }
