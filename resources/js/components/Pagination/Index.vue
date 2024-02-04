@@ -37,6 +37,14 @@ const items: Ref<UnwrapRef<ItemPagination[]>> = ref([] as ItemPagination[]);
 watch(() => props.paginationData, (value) => {
   if (value) {
     items.value = value.links
+    items.value[0] = {
+      ...items.value[0],
+      label: 'Anterior',
+    }
+    items.value[items.value.length - 1] = {
+      ...items.value[items.value.length - 1],
+      label: 'Próximo'
+    }
   }
 })
 
