@@ -18,7 +18,7 @@ class SupplierService implements ISupplierService
 
     public function getById(int $id): object
     {
-        return new \stdClass();
+        return $this->repository->getById($id);
     }
 
     public function create(array $data)
@@ -32,11 +32,11 @@ class SupplierService implements ISupplierService
 
     public function update(array $data, int $id)
     {
-        // TODO: Implement update() method.
+        return $this->repository->update($data, $id);
     }
 
     public function delete(int $id)
     {
-        // TODO: Implement delete() method.
+        return $this->repository->delete($id);
     }
 }

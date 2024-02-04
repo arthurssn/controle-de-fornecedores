@@ -25,11 +25,11 @@ class SupplierRepository implements ISupplierRepository
 
     public function update(array $data, int $id)
     {
-        // TODO: Implement update() method.
+        return Supplier::find($id)->update($data);
     }
 
     public function delete(int $id)
     {
-        // TODO: Implement delete() method.
+        return Supplier::find($id)->delete();
     }
 }
