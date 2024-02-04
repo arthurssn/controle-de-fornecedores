@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FindSupplierRequest;
 use App\Http\Requests\SupplierRequest;
 use App\Http\Resources\SupplierResource;
 use App\Interfaces\Supplier\ISupplierService;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class SupplierController extends Controller
@@ -15,10 +15,11 @@ class SupplierController extends Controller
     {
     }
 
-    public function index(Request $request)
+    public function index(FindSupplierRequest $request)
     {
         try {
-            return SupplierResource::collection($this->service->getAll($request->all()));
+//            return SupplierResource::collection($this->service->getAll($request->all()));
+            return $this->service->getAll($request->all());
         } catch (\Exception $exception) {
             return response($exception->getMessage(), $exception->getCode() > 400 && $exception->getCode() < 600 ? $exception->getCode() : 500);
         }
