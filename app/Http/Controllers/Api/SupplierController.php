@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SupplierRequest;
 use App\Http\Resources\SupplierResource;
 use App\Interfaces\Supplier\ISupplierService;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class SupplierController extends Controller
@@ -14,10 +15,10 @@ class SupplierController extends Controller
     {
     }
 
-    public function index()
+    public function index(Request $request)
     {
         try {
-            return response(SupplierResource::collection($this->service->getAll()), Response::HTTP_OK);
+            return SupplierResource::collection($this->service->getAll($request->all()));
         } catch (\Exception $exception) {
             return response($exception->getMessage(), $exception->getCode());
         }

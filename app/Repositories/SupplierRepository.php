@@ -14,6 +14,24 @@ class SupplierRepository extends CRUDRepository implements ISupplierRepository
 
     public function getAll(array $filter = null)
     {
-        return $this->model->paginate();
+        $numberOfItemsPerPage = $filter['numberOfItemsPerPage'] ?? 3;
+
+        if (!isset($filter['orderType'])) {
+            $filter['orderType'] = 'desc';
+            $filter['orderBy'] = 'created_at';
+        }
+
+        if (!isset($filter['search'])) {
+            $filter['search'] = '';
+        }
+        if ($filter['orderBy'] && strlen($filter['search']) > 0) {
+            return $this->model->where('name', 'like', '%' . $filter['search'] . '%')->orderBy($filter['orderBy'], $filter['orderType'])->paginate($numberOfItemsPerPage);
+        }
+
+        if ($filter['orderBy']) {
+            return $this->model->orderBy($filter['orderBy'], $filter['orderType'])->paginate($numberOfItemsPerPage);
+        }
+        
+        return $this->model->paginate($numberOfItemsPerPage);
     }
 }
