@@ -1,15 +1,22 @@
 <template>
-  <div class="flex gap-3 justify-end">
+  <div class="flex gap-3 justify-end align-baseline items-baseline">
     <div class="w-1/6">
-      <Input :options="optionsItemsPerPage" label="Itens por página" id="itemsPerPage" v-model="selectedItem"/>
+      <Select :options="optionsItemsPerPage" label="Itens por página" id="itemsPerPage" v-model="selectedItem"/>
+    </div>
+    <div class="w-full">
+      <SearchInput label="Buscar
+      CPF/CNPJ (Caso não haja dados na nossa base local, será consultado um endereço exterior)"
+                   @submit="console.log($event)"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 
-import Input from "@/components/Forms/Input";
+import Select from "@/components/Forms/Select";
 import {ref, watch} from "vue";
+import SearchInput from "@/components/Forms/SearchInput/SearchInput.vue";
 
 
 const optionsItemsPerPage: IOptionSelect[] = [
