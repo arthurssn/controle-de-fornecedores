@@ -1,5 +1,5 @@
 <template>
-  <Navigation :pagination-data="suppliers"/>
+  <Navigation :pagination-data="suppliers" @select-item="getSuppliers($event.url)"/>
 </template>
 
 <script setup lang="ts">
@@ -12,8 +12,8 @@ onMounted(() => getSuppliers())
 
 const suppliers = ref([]);
 
-async function getSuppliers() {
-  const {data} = await axios.get('/api/suppliers');
+async function getSuppliers(url: string = '') {
+  const {data} = await axios.get(url.length ? url : '/api/suppliers');
   suppliers.value = data;
 }
 

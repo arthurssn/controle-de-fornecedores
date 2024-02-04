@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Inertia\WelcomeInertiaController;
+use App\Http\Controllers\Inertia\HomeInertiaController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [WelcomeInertiaController::class, 'index'])->name('welcome');
+Route::get('/', [HomeInertiaController::class, 'index'])->name('home');

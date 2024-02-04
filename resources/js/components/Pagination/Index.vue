@@ -15,7 +15,6 @@
 </template>
 
 <script setup lang="ts">
-
 interface ItemPagination {
   url: string,
   label: string,
@@ -32,6 +31,8 @@ const props = defineProps({
   }
 })
 
+const emit = defineEmits(['selectItem']);
+
 const items: Ref<UnwrapRef<ItemPagination[]>> = ref([] as ItemPagination[]);
 
 watch(() => props.paginationData, (value) => {
@@ -42,49 +43,38 @@ watch(() => props.paginationData, (value) => {
 
 function onSelect(index: number) {
   const selectedItemIndex = items.value.findIndex(item => item.active)
-  items.value = items.value.map((item, indexItem) => {
+  items.value.forEach((item, indexItem) => {
 
     const clickedOnPreviousButton = index == 0;
     const lastPosition = items.value.length - 1;
     const clickedOnNextButton = index == lastPosition;
 
     if (clickedOnPreviousButton) {
-      if (selectedItemIndex == 1) {
-        return item
-      }
+      if (selectedItemIndex == 1)
+        return
       if (selectedItemIndex == indexItem + 1) {
-        return {
-          ...item, active: true
-        }
+        emit('selectItem', item)
+        return item.active = true
       }
-      return {
-        ...item, active: false
-      }
+      return item.active = false
     }
 
     if (clickedOnNextButton) {
-      if (selectedItemIndex == lastPosition - 1) {
-        return item
-      }
+      if (selectedItemIndex == lastPosition - 1)
+        return
       if (selectedItemIndex == indexItem - 1) {
-        return {
-          ...item, active: true
-        }
+        emit('selectItem', item)
+        return item.active = true
       }
-      return {
-        ...item, active: false
-      }
+      return item.active = false
     }
 
     if (index == indexItem) {
-      return {
-        ...item, active: true
-      }
+      emit('selectItem', item)
+      return item.active = true
     }
 
-    return {
-      ...item, active: false
-    }
+    return item.active = false
   })
 }
 </script>
