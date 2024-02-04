@@ -4,7 +4,7 @@
       <li v-for="(item, index) in items" :key="item.label">
         <ItemPagination
             :label="item.label"
-            :selected="item.selected"
+            :selected="item.active"
             :class="index == 0 ? 'rounded-s-lg ' : index == (items.length - 1)? 'rounded-e-lg' : '' "
             @click="onSelect(index)"
 
@@ -15,19 +15,33 @@
 </template>
 
 <script setup lang="ts">
-import ItemPagination from "./ItemPagination.vue";
-import {ref} from "vue";
 
-const items = ref([
-  {label: 'Previous', selected: false},
-  {label: '1', selected: true},
-  {label: '2', selected: false},
-  {label: '3', selected: false},
-  {label: 'Next', selected: false},
-])
+interface ItemPagination {
+  url: string,
+  label: string,
+  active: boolean
+}
+
+import ItemPagination from "./ItemPagination.vue";
+import {Ref, ref, UnwrapRef, watch} from "vue";
+
+const props = defineProps({
+  paginationData: {
+    type: Object,
+    required: true
+  }
+})
+
+const items: Ref<UnwrapRef<ItemPagination[]>> = ref([] as ItemPagination[]);
+
+watch(() => props.paginationData, (value) => {
+  if (value) {
+    items.value = value.links
+  }
+})
 
 function onSelect(index: number) {
-  const selectedItemIndex = items.value.findIndex(item => item.selected)
+  const selectedItemIndex = items.value.findIndex(item => item.active)
   items.value = items.value.map((item, indexItem) => {
 
     const clickedOnPreviousButton = index == 0;
@@ -40,11 +54,11 @@ function onSelect(index: number) {
       }
       if (selectedItemIndex == indexItem + 1) {
         return {
-          ...item, selected: true
+          ...item, active: true
         }
       }
       return {
-        ...item, selected: false
+        ...item, active: false
       }
     }
 
@@ -54,22 +68,22 @@ function onSelect(index: number) {
       }
       if (selectedItemIndex == indexItem - 1) {
         return {
-          ...item, selected: true
+          ...item, active: true
         }
       }
       return {
-        ...item, selected: false
+        ...item, active: false
       }
     }
 
     if (index == indexItem) {
       return {
-        ...item, selected: true
+        ...item, active: true
       }
     }
 
     return {
-      ...item, selected: false
+      ...item, active: false
     }
   })
 }

@@ -1,22 +1,20 @@
 <template>
-    <div>
-        <h1 class="text-3xl font-bold underline">
-            Hello world!
-        </h1>
-        <div>
-            Count is: {{ count }}
-            <button @click="count++">Click here to increment</button>
-        </div>
-        <div>
-            <Navigation/>
-        </div>
-    </div>
+  <Navigation :pagination-data="suppliers"/>
 </template>
 
 <script setup lang="ts">
 
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import Navigation from "../components/Pagination/Index.vue";
+import axios from "axios";
 
-const count = ref(0);
+onMounted(() => getSuppliers())
+
+const suppliers = ref([]);
+
+async function getSuppliers() {
+  const {data} = await axios.get('/api/suppliers');
+  suppliers.value = data;
+}
+
 </script>
