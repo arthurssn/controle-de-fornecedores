@@ -4,7 +4,7 @@ namespace App\Interfaces;
 
 interface ICRUD
 {
-    public function getAll(array $filter = null): array;
+    public function getAll(array $filter = null);
 
     public function getById(int $id): object;
 

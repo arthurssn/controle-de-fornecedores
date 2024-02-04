@@ -11,7 +11,7 @@ class SupplierService implements ISupplierService
     {
     }
 
-    public function getAll(array $filter = null): array
+    public function getAll(array $filter = null)
     {
         return $this->repository->getAll($filter);
     }

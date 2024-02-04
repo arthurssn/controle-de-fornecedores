@@ -8,9 +8,9 @@ use App\Models\Supplier;
 class SupplierRepository implements ISupplierRepository
 {
 
-    public function getAll(array $filter = null): array
+    public function getAll(array $filter = null)
     {
-        return Supplier::all()->toArray();
+        return Supplier::all();
     }
 
     public function getById(int $id): object
