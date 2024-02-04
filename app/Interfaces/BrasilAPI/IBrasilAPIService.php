@@ -2,7 +2,6 @@
 
 namespace App\Interfaces\BrasilAPI;
 
-interface IBrasilAPIService
+interface IBrasilAPIService extends IBrasilAPI
 {
-    public function getCompanyInfo(string $cnpj);
 }
