@@ -28,15 +28,15 @@ class SupplierService extends CRUDService implements ISupplierService
 
     public function create(array $data)
     {
-        if ($this->repository->cpfOrCnpjAlreadyInUse($data['cpf_cnpj'])) {
-            throw new \Exception('CPF/CNPJ already in use');
+        if (!isset($data['cpf_cnpj']) || $this->repository->cpfOrCnpjAlreadyInUse($data['cpf_cnpj'])) {
+            throw new \Exception('CPF/CNPJ invalid or already in use');
         }
 
-        if ($this->repository->emailAlreadyInUse($data['email'])) {
+        if (isset($data['email']) && $this->repository->emailAlreadyInUse($data['email'])) {
             throw new \Exception('Email already in use');
         }
 
-        if ($this->repository->phoneAlreadyInUse($data['phone'])) {
+        if (isset($data['phone']) && $this->repository->phoneAlreadyInUse($data['phone'])) {
             throw new \Exception('Phone already in use');
         }
 
