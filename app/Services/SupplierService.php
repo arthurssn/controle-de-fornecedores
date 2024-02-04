@@ -19,8 +19,7 @@ class SupplierService extends CRUDService implements ISupplierService
     public function getAll($filter = null)
     {
         if (isset($filter['cnpj'])) {
-            $companyInfo = $this->brasilAPIService->getCompanyInfo($filter['cnpj']);
-            return $companyInfo;
+            return $this->brasilAPIService->getCompanyInfo($filter['cnpj']);
         }
 
         return $this->repository->getAll($filter);

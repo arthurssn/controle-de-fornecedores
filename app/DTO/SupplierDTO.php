@@ -28,6 +28,7 @@ class SupplierDTO
             $this->city = $data['municipio'] ?? null;
             $this->state = $data['uf'] ?? null;
             $this->country = $data['pais'] ?? null;
+            $this->external = true;
             return;
         }
         $this->id = $data['id'] ?? null;
@@ -39,5 +40,6 @@ class SupplierDTO
         $this->city = $data['city'] ?? null;
         $this->state = $data['state'] ?? null;
         $this->country = $data['country'] ?? null;
+        $this->external = false;
     }
 }

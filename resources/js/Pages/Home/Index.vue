@@ -7,7 +7,8 @@
           Cadastrar Fornecedor
         </button>
       </div>
-      <Filter @change-items-per-page="queryParams = {...queryParams, numberOfItemsPerPage: $event}"/>
+      <Filter :query-params="queryParams"
+              @change-query="queryParams = $event"/>
       <SuppliersTable :suppliers="suppliers.data" @get-suppliers="getSuppliersOrdered"
                       :order-type="queryParams.orderType"/>
       <Pagination :pagination-data="suppliers" @select-item="getSuppliers($event.url)"/>
@@ -25,15 +26,16 @@ import axios from "axios";
 import Filter from "@/Pages/Home/components/Filter.vue";
 
 interface ISupplierResponse {
-  current_page: string,
+  current_page?: string,
   data: ISupplier[],
-  links: object[]
+  links?: object[]
 }
 
 interface IQueryParams {
   orderBy: string,
   orderType: string,
-  numberOfItemsPerPage: string | number
+  numberOfItemsPerPage: string | number,
+  cnpj: string
 }
 
 onMounted(() => getSuppliers())
@@ -49,7 +51,9 @@ watch(() => queryParams.value, (value) => {
 async function getSuppliers(url: string = '', params: IQueryParams = {} as IQueryParams) {
   currentUrl.value = url.length ? url : '/api/suppliers';
   queryParams.value = Object.keys(params).length > 0 ? params : queryParams.value;
-  const {data}: ISupplierResponse = await axios.get(currentUrl.value, {params: queryParams.value});
+  let {data}: ISupplierResponse = await axios.get(currentUrl.value, {params: queryParams.value});
+  if (queryParams.value.cnpj)
+    data.data = [data]
   suppliers.value = data;
 }
 

@@ -6,5 +6,6 @@ interface ISupplier {
     "address": string
     "city": string
     "state": string
-    "country": string
+    "country": string,
+    "external": boolean
 }

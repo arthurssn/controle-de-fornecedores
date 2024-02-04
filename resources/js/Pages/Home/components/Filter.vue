@@ -6,7 +6,10 @@
     <div class="w-full">
       <SearchInput label="Buscar
       CPF/CNPJ (Caso não haja dados na nossa base local, será consultado um endereço exterior)"
-                   @submit="console.log($event)"
+                   @submit="emit('changeQuery', {
+                     ...queryParams,
+                     cnpj: $event
+                   })"
       />
     </div>
   </div>
@@ -15,9 +18,14 @@
 <script setup lang="ts">
 
 import Select from "@/components/Forms/Select";
-import {ref, watch} from "vue";
+import {PropType, ref, watch} from "vue";
 import SearchInput from "@/components/Forms/SearchInput/SearchInput.vue";
 
+interface IQueryParams {
+  orderBy: string,
+  orderType: string,
+  numberOfItemsPerPage: string | number
+}
 
 const optionsItemsPerPage: IOptionSelect[] = [
   {label: 1, value: 1, selected: false},
@@ -29,8 +37,17 @@ const optionsItemsPerPage: IOptionSelect[] = [
 const selectedItem = ref(optionsItemsPerPage[1].value);
 
 watch(() => selectedItem.value, (value) => {
-  emit('changeItemsPerPage', value)
+  emit('changeQuery', {
+    ...props.queryParams,
+    numberOfItemsPerPage: value
+  })
 })
 
-const emit = defineEmits(['changeItemsPerPage'])
+const emit = defineEmits(['changeQuery'])
+const props = defineProps({
+  queryParams: {
+    type: Object as PropType<IQueryParams>,
+    required: true
+  }
+})
 </script>

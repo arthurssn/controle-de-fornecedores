@@ -51,30 +51,30 @@
             scope="row"
             class="px-6 py-4 font-semibold whitespace-nowrap text-black"
         >
-          {{ supplier.name }}
+          {{ supplier.name ?? 'Não informado' }}
         </th>
         <td class="px-6 py-4 text-blue-950 font-semibold">
-          {{ supplier.cpf_cnpj }}
+          {{ supplier.cpf_cnpj ?? 'Não informado' }}
         </td>
         <td class="px-6 py-4  text-blue-950 font-semibold">
-          {{ supplier.phone }}
+          {{ supplier.phone ?? 'Não informado' }}
         </td>
         <td class="px-6 py-4  text-blue-950 font-semibold">
-          {{ supplier.email }}
+          {{ supplier.email ?? 'Não informado' }}
         </td>
         <td class="px-6 py-4 text-right">
           <button
-              href="#"
               class="font-semibold text-blue-600 dark:text-blue-500 hover:underline p-2 bg-white rounded-md"
-          >Editar
+          > {{ supplier.external ? 'Visualizar' : 'Editar' }}
           </button
           >
         </td>
         <td class="px-6 py-4 text-right">
           <button
-              href="#"
-              class="font-semibold text-red-600 dark:text-red-500 hover:underline p-2 bg-white rounded-md"
-          >Excluir
+              :disabled="supplier.external"
+              class="font-semibold text-red-600 dark:text-red-500  p-2 bg-white rounded-md"
+              :class="supplier.external ? '':'hover:underline'"
+          >{{ supplier.external ? 'Esse é um registro externo que não pode ser manipulado' : 'Excluir' }}
           </button
           >
         </td>
@@ -87,12 +87,6 @@
 import Table from "@/components/Table/Index.vue";
 import {PropType} from "vue";
 import HeaderItem from "@/Pages/Home/components/HeaderItem.vue";
-
-const orderedHelper = {
-  Asc: "asc",
-  Desc: "desc",
-  Any: null,
-};
 
 defineProps({
   suppliers: {
