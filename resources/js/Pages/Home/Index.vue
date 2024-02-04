@@ -1,15 +1,18 @@
 <template>
-  <div class="w-1/2 flex flex-col gap-3 justify-center content-center">
-    <SuppliersTable :suppliers="suppliers.data" @get-suppliers="getSuppliersOrdered"
-                    :order-type="queryParams.orderType"/>
-    <Pagination :pagination-data="suppliers" @select-item="getSuppliers($event.url)"/>
-  </div>
+  <Main>
+    <div class="flex flex-col gap-3 justify-center content-center">
+      <SuppliersTable :suppliers="suppliers.data" @get-suppliers="getSuppliersOrdered"
+                      :order-type="queryParams.orderType"/>
+      <Pagination :pagination-data="suppliers" @select-item="getSuppliers($event.url)"/>
+    </div>
+  </Main>
 </template>
 
 <script setup lang="ts">
 import SuppliersTable from "@/Pages/Home/components/SuppliersTable.vue";
 import {onMounted, Ref, ref, UnwrapRef} from "vue";
 import Pagination from "@/components/Pagination/Index.vue";
+import Main from "@/layout/Main.vue";
 
 import axios from "axios";
 
