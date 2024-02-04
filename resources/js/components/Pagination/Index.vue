@@ -1,5 +1,5 @@
 <template>
-  <nav aria-label="Page navigation example">
+  <nav aria-label="Page navigation example w-100">
     <ul class="inline-flex -space-x-px text-base h-10">
       <li v-for="(item, index) in items" :key="item.label">
         <ItemPagination
