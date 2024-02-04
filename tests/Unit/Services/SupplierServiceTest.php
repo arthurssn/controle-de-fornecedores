@@ -50,7 +50,7 @@ class SupplierServiceTest extends TestCase
             ->willReturn(true);
 
         $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('CPF/CNPJ already in use');
+        $this->expectExceptionMessage('CPF/CNPJ invalid or already in use');
 
         $this->supplierService->create(['cpf_cnpj' => '12345678901']);
     }
