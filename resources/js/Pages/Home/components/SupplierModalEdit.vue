@@ -18,17 +18,7 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modalOpen']);
 
-const form: Ref<UnwrapRef<ISupplier>> = ref({
-  name: '',
-  cpf_cnpj: '',
-  email: '',
-  phone: '',
-  state: '',
-  city: '',
-  address: '',
-  number: '',
-  country: 'Brasil',
-})
+const form: Ref<UnwrapRef<ISupplier>> = ref({} as ISupplier)
 
 watch(() => props.supplier, (value) => {
   if (Object.keys(value).length)
@@ -49,7 +39,7 @@ function createSupplier() {
 </script>
 
 <template>
-  <Modal :modal-open="modalOpen" @update:modalOpen="emit('update:modalOpen', $event)" title="Cadastrar Fornecedor">
+  <Modal :modal-open="modalOpen" @update:modalOpen="emit('update:modalOpen', $event)" title="Atualizar Fornecedor">
     <template #body>
       <form id="form" class="flex flex-col gap-4" @submit.prevent="createSupplier">
         <Input class=w-full :required="true" id="name" placeholder="Digite o nome" label="Nome"
@@ -80,7 +70,7 @@ function createSupplier() {
       <button type="submit"
               form="form"
               class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-        Cadastrar
+        Atualizar
       </button>
     </template>
   </Modal>

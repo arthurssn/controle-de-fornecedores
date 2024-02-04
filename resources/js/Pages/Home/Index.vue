@@ -5,7 +5,7 @@
       <div class="flex justify-end ">
         <button type="button"
                 class="w-full sm:w-fit text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-bold rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-80 w-1/6"
-                @click="modalOpen = true">
+                @click="modalCreateOpen = true">
           Cadastrar Fornecedor
         </button>
       </div>
@@ -26,7 +26,10 @@
       />
     </div>
   </Main>
-  <SupplierModal :modal-open="modalOpen" @update:modalOpen="modalOpen = $event" :supplier="supplierSelected"/>
+  <SupplierModalEdit :modal-open="modalEditOpen" @update:modalOpen="modalEditOpen = $event"
+                     :supplier="supplierSelected"/>
+  <SupplierModalCreate :modal-open="modalCreateOpen" @update:modalOpen="modalCreateOpen = $event"
+                       :supplier="supplierSelected"/>
 </template>
 
 <script setup lang="ts">
@@ -37,7 +40,8 @@ import Main from "@/layout/Main.vue";
 
 import axios from "axios";
 import Filter from "@/Pages/Home/components/Filter.vue";
-import SupplierModal from "@/Pages/Home/components/SupplierModal.vue";
+import SupplierModalEdit from "@/Pages/Home/components/SupplierModalEdit.vue";
+import SupplierModalCreate from "@/Pages/Home/components/SupplierModalCreate.vue";
 import Swal from "sweetalert2";
 
 interface ISupplierResponse {
@@ -57,8 +61,9 @@ interface IQueryParams {
 const suppliers: Ref<UnwrapRef<ISupplierResponse>> = ref({} as ISupplierResponse);
 const currentUrl: Ref<string> = ref('');
 const queryParams: Ref<UnwrapRef<IQueryParams>> = ref({} as IQueryParams);
-const modalOpen = ref(false);
-const supplierSelected: ISupplier = ref({} as ISupplier);
+const modalEditOpen = ref(false);
+const modalCreateOpen = ref(false);
+const supplierSelected: Ref<UnwrapRef<ISupplier>> = ref({} as ISupplier);
 
 watch(() => queryParams.value, (value) => {
   getSuppliers(currentUrl.value, value);
@@ -98,7 +103,7 @@ async function getSuppliersOrdered(params: IQueryParams = {} as IQueryParams) {
 function onSelectSupplier(event) {
   console.log(event)
   if (event.action === 'edit') {
-    modalOpen.value = true;
+    modalEditOpen.value = true;
     supplierSelected.value = event.supplier;
   }
 }
