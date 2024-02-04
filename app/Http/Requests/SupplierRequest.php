@@ -22,7 +22,7 @@ class SupplierRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'cpf_cnpj' => 'string|min:11|required',
+            'cpf_cnpj' => 'string|min:11|required|CpfOuCnpj',
             'name' => 'string:min:3|required',
             'email' => 'string|email',
             'phone' => 'string',
