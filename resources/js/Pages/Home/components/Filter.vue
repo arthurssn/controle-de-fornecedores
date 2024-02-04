@@ -5,11 +5,8 @@
     </div>
     <div class="w-full">
       <SearchInput label="Buscar
-      CPF/CNPJ (Caso não haja dados na nossa base local, será consultado um endereço exterior)"
-                   @submit="emit('changeQuery', {
-                     ...queryParams,
-                     cnpj: $event
-                   })"
+      CPF/CNPJ (Caso não haja dados na nossa base local, será consultado um endereço exterior) - Deixe vazio para buscar todos os fornecedores"
+                   @submit="changeCnpj"
       />
     </div>
   </div>
@@ -50,4 +47,17 @@ const props = defineProps({
     required: true
   }
 })
+
+function changeCnpj(cnpj = '') {
+  console.log(cnpj)
+  const args = {
+    ...props.queryParams,
+  }
+  if (cnpj.length) {
+    args.cnpj = cnpj
+  } else {
+    delete args.cnpj
+  }
+  emit('changeQuery', args)
+}
 </script>
