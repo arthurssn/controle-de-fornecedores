@@ -1,6 +1,8 @@
 <template>
   <div class="flex items-center">
+    <span class="text-blue-200">
     {{ label }}
+      </span>
     <button
         @click="emit('getSuppliers',  {'orderBy': orderBy, 'orderType': orderType == orderedHelper.Asc ? orderedHelper.Desc : orderedHelper.Asc })">
       <svg class="w-3 h-3 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
