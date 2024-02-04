@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\DTO\SupplierDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FindSupplierRequest;
 use App\Http\Requests\SupplierRequest;
@@ -18,8 +19,16 @@ class SupplierController extends Controller
     public function index(FindSupplierRequest $request)
     {
         try {
-//            return SupplierResource::collection($this->service->getAll($request->all()));
-            return $this->service->getAll($request->all());
+            $suppliersData = $this->service->getAll($request->all());
+            if (isset($suppliersData['qsa'])) {
+                return response()->json(new SupplierDTO($suppliersData));
+            }
+            
+            foreach ($suppliersData as $key => $supplierData) {
+                $suppliersData[$key] = new SupplierDTO($supplierData);
+            }
+            return $suppliersData;
+
         } catch (\Exception $exception) {
             return response($exception->getMessage(), $exception->getCode() > 400 && $exception->getCode() < 600 ? $exception->getCode() : 500);
         }
