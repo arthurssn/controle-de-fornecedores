@@ -7,5 +7,6 @@ interface ISupplier {
     "city": string
     "state": string
     "country": string,
+    "number": string,
     "external": boolean
 }

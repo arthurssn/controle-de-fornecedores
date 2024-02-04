@@ -4,7 +4,8 @@
     <div class="flex flex-col gap-3 justify-center content-center">
       <div class="flex justify-end ">
         <button type="button"
-                class="w-full sm:w-fit text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-bold rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-80 w-1/6">
+                class="w-full sm:w-fit text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-bold rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-80 w-1/6"
+                @click="modalOpen = true">
           Cadastrar Fornecedor
         </button>
       </div>
@@ -16,6 +17,7 @@
       <Pagination :pagination-data="suppliers" @select-item="getSuppliers($event.url)"/>
     </div>
   </Main>
+  <SupplierModal :modal-open="modalOpen"/>
 </template>
 
 <script setup lang="ts">
@@ -26,6 +28,7 @@ import Main from "@/layout/Main.vue";
 
 import axios from "axios";
 import Filter from "@/Pages/Home/components/Filter.vue";
+import SupplierModal from "@/Pages/Home/components/SupplierModal.vue";
 
 interface ISupplierResponse {
   current_page?: string,
@@ -40,15 +43,17 @@ interface IQueryParams {
   cnpj: string
 }
 
-onMounted(() => getSuppliers())
 
 const suppliers: Ref<UnwrapRef<ISupplierResponse>> = ref({} as ISupplierResponse);
 const currentUrl: Ref<string> = ref('');
 const queryParams: Ref<UnwrapRef<IQueryParams>> = ref({} as IQueryParams);
+const modalOpen = ref(false);
 
 watch(() => queryParams.value, (value) => {
   getSuppliers(currentUrl.value, value);
 }, {deep: true})
+
+onMounted(() => getSuppliers())
 
 async function getSuppliers(url: string = '', params: IQueryParams = {} as IQueryParams) {
   currentUrl.value = url.length ? url : '/api/suppliers';
