@@ -36,6 +36,7 @@ const items: Ref<UnwrapRef<ItemPagination[]>> = ref([] as ItemPagination[]);
 
 watch(() => props.paginationData, (value) => {
   if (value) {
+    if (!value.links) return
     items.value = value.links
     items.value[0] = {
       ...items.value[0],

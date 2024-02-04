@@ -14,7 +14,8 @@
               @change-query="queryParams = $event"/>
       <SuppliersTable :suppliers="suppliers.data" @get-suppliers="getSuppliersOrdered"
                       :order-type="queryParams.orderType"/>
-      <Pagination :pagination-data="suppliers" @select-item="getSuppliers($event.url)"/>
+      <Pagination :pagination-data="suppliers"
+                  @select-item="getSuppliers($event.url)"/>
     </div>
   </Main>
   <SupplierModal :modal-open="modalOpen" @update:modalOpen="modalOpen = $event"/>
@@ -59,8 +60,13 @@ async function getSuppliers(url: string = '', params: IQueryParams = {} as IQuer
   currentUrl.value = url.length ? url : '/api/suppliers';
   queryParams.value = Object.keys(params).length > 0 ? params : queryParams.value;
   let {data}: ISupplierResponse = await axios.get(currentUrl.value, {params: queryParams.value});
-  if (queryParams.value.cnpj)
-    data.data = [data]
+  if (queryParams.value.cnpj) {
+    suppliers.value = {
+      data: [data]
+    };
+    return;
+    ''
+  }
   suppliers.value = data;
 }
 

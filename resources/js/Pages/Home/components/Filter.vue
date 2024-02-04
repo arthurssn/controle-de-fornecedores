@@ -49,7 +49,6 @@ const props = defineProps({
 })
 
 function changeCnpj(cnpj = '') {
-  console.log(cnpj)
   const args = {
     ...props.queryParams,
   }
