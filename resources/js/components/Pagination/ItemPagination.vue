@@ -7,8 +7,8 @@
            'text-blue-600 border border-green-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-green-700 dark:bg-green-700 dark:text-white'
         )"
           @click="emit('click')"
+          v-html="props.label"
   >
-    {{ props.label }}
   </button>
 </template>
 
