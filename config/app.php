@@ -1,5 +1,7 @@
 <?php
 
+use App\Providers\RepositoriesServiceProvider;
+use App\Providers\ServicesServiceProvider;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
@@ -42,7 +44,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -163,6 +165,8 @@ return [
         /*
          * Application Service Providers...
          */
+        ServicesServiceProvider::class,
+        RepositoriesServiceProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
