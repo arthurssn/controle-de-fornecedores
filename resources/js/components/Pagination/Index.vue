@@ -27,7 +27,41 @@ const items = ref([
 ])
 
 function onSelect(index: number) {
+  const selectedItemIndex = items.value.findIndex(item => item.selected)
   items.value = items.value.map((item, indexItem) => {
+
+    const clickedOnPreviousButton = index == 0;
+    const lastPosition = items.value.length - 1;
+    const clickedOnNextButton = index == lastPosition;
+
+    if (clickedOnPreviousButton) {
+      if (selectedItemIndex == 1) {
+        return item
+      }
+      if (selectedItemIndex == indexItem + 1) {
+        return {
+          ...item, selected: true
+        }
+      }
+      return {
+        ...item, selected: false
+      }
+    }
+
+    if (clickedOnNextButton) {
+      if (selectedItemIndex == lastPosition - 1) {
+        return item
+      }
+      if (selectedItemIndex == indexItem - 1) {
+        return {
+          ...item, selected: true
+        }
+      }
+      return {
+        ...item, selected: false
+      }
+    }
+
     if (index == indexItem) {
       return {
         ...item, selected: true
