@@ -2,6 +2,7 @@
 import Modal from "@/components/Modal/Modal.vue";
 import Input from "@/components/Forms/Input.vue";
 import {reactive} from "vue";
+import axios from "axios";
 
 defineProps({
   modalOpen: {
@@ -13,12 +14,23 @@ defineProps({
 const emit = defineEmits(['update:modalOpen']);
 
 const form: ISupplier = reactive({} as ISupplier)
+
+function createSupplier() {
+  axios.post('/api/suppliers', form)
+      .then(() => {
+        emit('update:modalOpen', false);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+}
+
 </script>
 
 <template>
   <Modal :modal-open="modalOpen" @update:modalOpen="emit('update:modalOpen', $event)" title="Cadastrar Fornecedor">
     <template #body>
-      <form id="form" class="flex flex-col gap-4">
+      <form id="form" class="flex flex-col gap-4" @submit.prevent="createSupplier">
         <Input class=w-full :required="true" id="name" placeholder="Digite o nome" label="Nome"
                v-model="form.name"/>
         <Input :required="true" id="cnpj" placeholder="Digite o CPF/CNPJ" label="CNPJ" v-model="form.cpf_cnpj"/>
@@ -57,7 +69,3 @@ const form: ISupplier = reactive({} as ISupplier)
     </template>
   </Modal>
 </template>
-
-<style scoped>
-
-</style>

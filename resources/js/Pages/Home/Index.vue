@@ -17,7 +17,7 @@
       <Pagination :pagination-data="suppliers" @select-item="getSuppliers($event.url)"/>
     </div>
   </Main>
-  <SupplierModal :modal-open="modalOpen"/>
+  <SupplierModal :modal-open="modalOpen" @update:modalOpen="modalOpen = $event"/>
 </template>
 
 <script setup lang="ts">
