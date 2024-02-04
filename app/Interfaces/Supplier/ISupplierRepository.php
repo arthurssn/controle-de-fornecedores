@@ -9,4 +9,6 @@ interface ISupplierRepository extends ISupplier
     public function emailAlreadyInUse(string $email);
 
     public function phoneAlreadyInUse(string $phone);
+
+    public function getByCnpj(string $cnpj);
 }

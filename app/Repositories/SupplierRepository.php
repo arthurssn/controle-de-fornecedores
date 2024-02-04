@@ -35,6 +35,11 @@ class SupplierRepository extends CRUDRepository implements ISupplierRepository
         return $this->model->paginate($numberOfItemsPerPage);
     }
 
+    public function getByCnpj(string $cnpj)
+    {
+        return $this->model->where('cpf_cnpj', $cnpj)->first();
+    }
+
     public function cpfOrCnpjAlreadyInUse(string $cpf_cnpj)
     {
         return $this->model->where('cpf_cnpj', $cpf_cnpj)->exists();
