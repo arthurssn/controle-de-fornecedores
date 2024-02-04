@@ -28,10 +28,9 @@ onMounted(() => getSuppliers())
 
 const suppliers: Ref<UnwrapRef<ISupplierResponse>> = ref({} as ISupplierResponse);
 const currentUrl: Ref<string> = ref('');
-const queryParams: Ref<UnwrapRef<IQueryParams>> = ref({});
+const queryParams: Ref<UnwrapRef<IQueryParams>> = ref({} as IQueryParams);
 
 async function getSuppliers(url: string = '', params = {}) {
-  console.log(url, params)
   currentUrl.value = url.length ? url : '/api/suppliers';
   queryParams.value = Object.keys(params).length > 0 ? params : queryParams.value;
   const {data}: ISupplierResponse = await axios.get(currentUrl.value, {params: queryParams.value});
