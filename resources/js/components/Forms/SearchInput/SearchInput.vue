@@ -34,7 +34,7 @@ const search: Ref<string> = ref('');
       <input type="search" id="default-search"
              v-model="search"
              class="block w-full p-2.5 ps-10 text-sm text-blue-950 border border-white-300 rounded-lg bg-white-50 focus:ring-white-500 focus:border-white-500 dark:bg-white-700 dark:border-white-600 dark:placeholder-white-400 dark:text-blue-950 dark:focus:ring-white-500 dark:focus:border-white-500"
-             :placeholder="placeholder" required
+             :placeholder="placeholder"
       >
       <button type="submit"
               class="text-white absolute end-2.5 bottom-2 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-1 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">

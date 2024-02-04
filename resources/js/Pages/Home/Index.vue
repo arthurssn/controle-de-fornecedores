@@ -1,12 +1,14 @@
 <template>
   <Main>
+    <h1 class="text-blue-950 text-2xl font-bold mb-4">Controle de Fornecedores</h1>
     <div class="flex flex-col gap-3 justify-center content-center">
-      <div class="flex justify-start">
+      <div class="flex justify-end ">
         <button type="button"
-                class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-80 w-1/6">
+                class="w-full sm:w-fit text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-bold rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-80 w-1/6">
           Cadastrar Fornecedor
         </button>
       </div>
+      <hr class="h-px my-2 bg-blue-100 border-0 dark:bg-blue-300">
       <Filter :query-params="queryParams"
               @change-query="queryParams = $event"/>
       <SuppliersTable :suppliers="suppliers.data" @get-suppliers="getSuppliersOrdered"
