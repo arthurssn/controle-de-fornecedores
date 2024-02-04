@@ -31,7 +31,22 @@ class SupplierRepository extends CRUDRepository implements ISupplierRepository
         if ($filter['orderBy']) {
             return $this->model->orderBy($filter['orderBy'], $filter['orderType'])->paginate($numberOfItemsPerPage);
         }
-        
+
         return $this->model->paginate($numberOfItemsPerPage);
+    }
+
+    public function cpfOrCnpjAlreadyInUse(string $cpf_cnpj)
+    {
+        return $this->model->where('cpf_cnpj', $cpf_cnpj)->exists();
+    }
+
+    public function emailAlreadyInUse(string $email)
+    {
+        return $this->model->where('email', $email)->exists();
+    }
+
+    public function phoneAlreadyInUse(string $phone)
+    {
+        return $this->model->where('phone', $phone)->exists();
     }
 }
