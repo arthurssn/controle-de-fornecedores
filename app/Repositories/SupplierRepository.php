@@ -25,11 +25,17 @@ class SupplierRepository implements ISupplierRepository
 
     public function update(array $data, int $id)
     {
-        return Supplier::find($id)->update($data);
+        $supplier = Supplier::find($id);
+        if ($supplier)
+            return $supplier->update($data);
+        throw new \Exception('Fornecedor não encontrado', 404);
     }
 
     public function delete(int $id)
     {
-        return Supplier::find($id)->delete();
+        $supplier = Supplier::find($id);
+        if ($supplier)
+            return $supplier->delete();
+        throw new \Exception('Fornecedor não encontrado', 404);
     }
 }
