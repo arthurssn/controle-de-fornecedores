@@ -2,14 +2,14 @@
   <div class="w-1/2 flex flex-col gap-3 justify-center content-center">
     <SuppliersTable :suppliers="suppliers.data" @get-suppliers="getSuppliersOrdered"
                     :order-type="queryParams.orderType"/>
-    <Navigation :pagination-data="suppliers" @select-item="getSuppliers($event.url)"/>
+    <Pagination :pagination-data="suppliers" @select-item="getSuppliers($event.url)"/>
   </div>
 </template>
 
 <script setup lang="ts">
 import SuppliersTable from "@/Pages/Home/components/SuppliersTable.vue";
 import {onMounted, Ref, ref, UnwrapRef} from "vue";
-import Navigation from "@/components/Pagination/Index.vue";
+import Pagination from "@/components/Pagination/Index.vue";
 
 import axios from "axios";
 

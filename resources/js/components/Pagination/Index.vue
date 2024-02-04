@@ -1,5 +1,5 @@
 <template>
-  <nav aria-label="Page navigation example w-100">
+  <nav aria-label="Page navigation " class="w-100 flex content-center justify-center">
     <ul class="inline-flex -space-x-px text-base h-10">
       <li v-for="(item, index) in items" :key="item.label">
         <ItemPagination
@@ -7,7 +7,6 @@
             :selected="item.active"
             :class="index == 0 ? 'rounded-s-lg ' : index == (items.length - 1)? 'rounded-e-lg' : '' "
             @click="onSelect(index)"
-
         />
       </li>
     </ul>
