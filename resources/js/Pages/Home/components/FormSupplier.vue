@@ -16,7 +16,7 @@ defineProps({
                                      v-model="form.cpf_cnpj"/>
   <div class="flex flex-row gap-2">
     <Input class="w-1/2" id="email" placeholder="Digite o e-mail" label="Email"
-           v-model="form.email"/>
+           v-model="form.email" type="email" />
     <Input class="w-1/2" id="phone" placeholder="Digite o celular" label="Celular"
            v-model="form.phone"/>
   </div>
@@ -31,6 +31,6 @@ defineProps({
     <Input class="w-full" id="address" placeholder="Digite o endereço" label="Endereço"
            v-model="form.address"/>
     <Input id="number" placeholder="Digite o número" label="Número"
-           v-model="form.number"/>
+           v-model="form.number" type="number" step="1" />
   </div>
 </template>
