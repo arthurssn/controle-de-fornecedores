@@ -57,7 +57,12 @@ php artisan migrate
 php artisan db:seed
 ```
 
-7. Instale as dependências do front-end e inicie o servidor de desenvolvimento:
+7. Instale as dependências do front-end e inicie o servidor de desenvolvimento (Requere Node.js V16+). Use o nvm para instalar a versão correta do Node.js.
+
+```bash:
+nvm install 16.15.0
+nvm use
+```
 
 ```bash
 npm install
