@@ -23,7 +23,6 @@
           @submit-success="getSuppliers"
       />
       <Pagination
-          v-if="suppliers?.data?.length > 0"
           :pagination-data="suppliers"
           @select-item="getSuppliers($event.url)"
       />
