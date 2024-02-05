@@ -19,6 +19,7 @@
                 @get-suppliers="getSuppliersOrdered"
                 :order-type="queryParams.orderType"
                 @select-supplier="onSelectSupplier"
+                @submit-success="getSuppliers"
             />
             <Pagination
                 :pagination-data="suppliers"
