@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  main:
+    container_name: serve
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: 'php artisan serve --host=0.0.0.0'
+    volumes:
+      - .:/app
+    ports:
+      - "8001:8000"
+  db:
+    container_name: app_db
+    platform: linux/x86_64
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - db:/var/lib/pgsql
+    ports:
+      - "5434:5432"
+
+networks:
+  laravel-exa:
+    driver: bridge
+
+volumes:
+  db:
+    driver: local
