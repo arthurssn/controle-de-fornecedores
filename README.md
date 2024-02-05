@@ -35,15 +35,7 @@ cd controle-de-fornecedores
 docker-compose up --build
 ```
 
-4. Configure um banco de dados:
-
-```bash
-docker exec -it app_db psql -U postgres -d postgres
-```
-
-```bash
-CREATE DATABASE control
-```
+4. Crie um banco de dados, de prerência chamado 'control'. Se for diferente, altere o arquivo .env.
 
 5. Copie o arquivo .env.example para .env:
 
@@ -62,7 +54,7 @@ php artisan migrate
 ```
 
 ```bash
-php artisan seed
+php artisan db:seed
 ```
 
 7. Instale as dependências do front-end e inicie o servidor de desenvolvimento:

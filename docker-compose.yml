@@ -7,7 +7,8 @@ services:
       dockerfile: Dockerfile
     command: 'php artisan serve --host=0.0.0.0'
     volumes:
-      - .:/var/www/html
+        - .:/var/www/html
+        - /var/www/html/vendor
     ports:
       - "8001:8000"
   db:
@@ -19,6 +20,7 @@ services:
       POSTGRES_PASSWORD: password
     volumes:
       - db:/var/lib/pgsql
+      - ./docker/postgres/database:/var/lib/postgresql/data
     ports:
       - "5434:5432"
 
