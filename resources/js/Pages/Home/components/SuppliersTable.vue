@@ -106,7 +106,7 @@ defineProps({
     },
 });
 
-const emit = defineEmits(["submitSuccess", 'selectSupplier']);
+const emit = defineEmits(["submitSuccess", 'getSuppliers']);
 
 async function removeSupplier(id: number) {
     Swal.fire({

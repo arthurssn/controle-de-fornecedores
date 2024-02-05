@@ -81,6 +81,7 @@ watch(() => queryParams.value, (value) => {
 onMounted(() => getSuppliers())
 
 async function getSuppliers(url: string = '', params: IQueryParams = {} as IQueryParams) {
+    suppliers.value = {} as ISupplierResponse;
     currentUrl.value = url.length ? url : '/api/suppliers';
     queryParams.value = Object.keys(params).length > 0 ? params : queryParams.value;
     try {
@@ -90,11 +91,9 @@ async function getSuppliers(url: string = '', params: IQueryParams = {} as IQuer
                 data: [data]
             };
             return;
-            ''
         }
         suppliers.value = data;
     } catch (e) {
-        console.log(e.response.data)
         Swal.fire({
             title: 'Erro ao buscar fornecedores',
             text: 'Tente novamente mais tarde: ' + (typeof e.response.data == 'string' ? e.response.data : e.response.data.message),
@@ -104,6 +103,7 @@ async function getSuppliers(url: string = '', params: IQueryParams = {} as IQuer
 }
 
 async function getSuppliersOrdered(params: IQueryParams = {} as IQueryParams) {
+    suppliers.value = {} as ISupplierResponse;
     currentUrl.value = '/api/suppliers';
     queryParams.value = {...params, numberOfItemsPerPage: queryParams.value.numberOfItemsPerPage};
     const {data}: ISupplierResponse = await axios.get(currentUrl.value, {params: queryParams.value});
@@ -111,7 +111,6 @@ async function getSuppliersOrdered(params: IQueryParams = {} as IQueryParams) {
 }
 
 function onSelectSupplier(event) {
-    console.log(event)
     if (event.action === 'edit') {
         modalEditOpen.value = true;
         supplierSelected.value = event.supplier;
