@@ -18,14 +18,17 @@ class SupplierService extends CRUDService implements ISupplierService
 
     public function getAll($filter = null)
     {
-        if (isset($filter['cnpj'])) {
-            $fromModel = $this->repository->getByCnpj($filter['cnpj']);
-            if ($fromModel)
-                return $fromModel;
-            return $this->brasilAPIService->getCompanyInfo($filter['cnpj']);
+        try {
+            if (isset($filter['cnpj'])) {
+                $fromModel = $this->repository->getByCnpj($filter['cnpj']);
+                if ($fromModel)
+                    return $fromModel;
+                return $this->brasilAPIService->getCompanyInfo($filter['cnpj']);
+            }
+            return $this->repository->getAll($filter);
+        } catch (\Exception $e) {
+            throw new \Exception('Erro ao buscar fornecedor. ' . ($e->getCode() == 404 ? 'CNPJ Não encontrado' : ''), $e->getCode());
         }
-
-        return $this->repository->getAll($filter);
     }
 
     public function create(array $data)

@@ -9,6 +9,7 @@ use App\Http\Requests\SupplierRequest;
 use App\Http\Resources\SupplierResource;
 use App\Interfaces\Supplier\ISupplierService;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 class SupplierController extends Controller
 {
@@ -23,14 +24,15 @@ class SupplierController extends Controller
             if (isset($suppliersData['qsa'])) {
                 return response()->json(new SupplierDTO($suppliersData));
             }
-            
+
             foreach ($suppliersData as $key => $supplierData) {
                 $suppliersData[$key] = new SupplierDTO($supplierData);
             }
             return $suppliersData;
 
         } catch (\Exception $exception) {
-            return response($exception->getMessage(), $exception->getCode() > 400 && $exception->getCode() < 600 ? $exception->getCode() : 500);
+            Log::info($exception->getMessage());
+            return response($exception->getMessage(), 404);
         }
     }
 

@@ -15,6 +15,10 @@ class BrasilAPIService implements IBrasilAPIService
 
     public function getCompanyInfo(string $cnpj)
     {
-        return $this->repository->getCompanyInfo($cnpj);
+        try {
+            return $this->repository->getCompanyInfo($cnpj);
+        } catch (\Exception $e) {
+            throw new \Exception('Erro ao buscar fornecedor. ' . ($e->getCode() == 404 ? 'CNPJ Não encontrado' : ''), $e->getCode());
+        }
     }
 }

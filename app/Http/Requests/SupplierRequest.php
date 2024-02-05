@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class SupplierRequest extends FormRequest
 {
@@ -21,11 +22,26 @@ class SupplierRequest extends FormRequest
      */
     public function rules(): array
     {
+        $supplierId = $this->route('supplier') ? $this->route('supplier') : null;
+
         return [
-            'cpf_cnpj' => 'string|min:11|required|CpfOuCnpj|unique:suppliers,cpf_cnpj',
-            'name' => 'string:min:3|required',
-            'email' => 'string|email|unique:suppliers,email',
-            'phone' => 'string|unique:suppliers,phone',
+            'cpf_cnpj' => [
+                'string',
+                'min:11',
+                'required',
+                'CpfOuCnpj',
+                Rule::unique('suppliers')->ignore($supplierId),
+            ],
+            'name' => 'string|min:3|required',
+            'email' => [
+                'string',
+                'email',
+                Rule::unique('suppliers')->ignore($supplierId),
+            ],
+            'phone' => [
+                'string',
+                Rule::unique('suppliers')->ignore($supplierId),
+            ],
             'address' => 'string',
             'number' => 'string',
             'city' => 'string',
@@ -33,6 +49,7 @@ class SupplierRequest extends FormRequest
             'country' => 'string'
         ];
     }
+
 
     public function messages()
     {
