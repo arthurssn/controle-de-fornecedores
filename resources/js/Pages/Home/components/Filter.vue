@@ -18,12 +18,6 @@ import Select from "@/components/Forms/Select";
 import {PropType, ref, watch} from "vue";
 import SearchInput from "@/components/Forms/SearchInput/SearchInput.vue";
 
-interface IQueryParams {
-  orderBy: string,
-  orderType: string,
-  numberOfItemsPerPage: string | number
-}
-
 const optionsItemsPerPage: IOptionSelect[] = [
   {label: 1, value: 1, selected: false},
   {label: 3, value: 3, selected: true},

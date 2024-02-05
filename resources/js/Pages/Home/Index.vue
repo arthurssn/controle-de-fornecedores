@@ -55,20 +55,6 @@ import SupplierModalCreate from "@/Pages/Home/components/SupplierModalCreate.vue
 import Swal from "sweetalert2";
 import SupplierService from "@/services/SupplierService";
 
-interface ISupplierResponse {
-  current_page?: string,
-  data: ISupplier[],
-  links?: object[]
-}
-
-interface IQueryParams {
-  orderBy: string,
-  orderType: string,
-  numberOfItemsPerPage: string | number,
-  cnpj: string
-}
-
-
 const suppliers: Ref<UnwrapRef<ISupplierResponse>> = ref({} as ISupplierResponse);
 const currentUrl: Ref<string> = ref('');
 const queryParams: Ref<UnwrapRef<IQueryParams>> = ref({} as IQueryParams);
