@@ -53,6 +53,7 @@ import Filter from "@/Pages/Home/components/Filter.vue";
 import SupplierModalEdit from "@/Pages/Home/components/SupplierModalEdit.vue";
 import SupplierModalCreate from "@/Pages/Home/components/SupplierModalCreate.vue";
 import Swal from "sweetalert2";
+import SupplierService from "@/services/SupplierService";
 
 interface ISupplierResponse {
   current_page?: string,
@@ -88,7 +89,7 @@ async function getSuppliers(url: string = '', params: IQueryParams = {} as IQuer
   queryParams.value = Object.keys(params).length > 0 ? params : queryParams.value;
   gettingSuppliers.value = true;
   try {
-    let {data}: ISupplierResponse = await axios.get(currentUrl.value, {params: queryParams.value});
+    let {data}: ISupplierResponse = await SupplierService.getAll(currentUrl.value, queryParams.value);
     if (queryParams.value.cnpj) {
       suppliers.value = {
         data: [data]
@@ -111,7 +112,7 @@ async function getSuppliersOrdered(params: IQueryParams = {} as IQueryParams) {
   suppliers.value = {} as ISupplierResponse;
   currentUrl.value = '/api/suppliers';
   queryParams.value = {...params, numberOfItemsPerPage: queryParams.value.numberOfItemsPerPage};
-  const {data}: ISupplierResponse = await axios.get(currentUrl.value, {params: queryParams.value});
+  const {data}: ISupplierResponse = await SupplierService.getAll(currentUrl.value,  queryParams.value);
   suppliers.value = data;
 }
 

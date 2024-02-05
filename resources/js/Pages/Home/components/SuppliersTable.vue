@@ -94,6 +94,7 @@ import {PropType} from "vue";
 import HeaderItem from "@/Pages/Home/components/HeaderItem.vue";
 import axios from "axios";
 import Swal from "sweetalert2";
+import SupplierService from "@/services/SupplierService";
 
 defineProps({
   loading: {
@@ -124,7 +125,7 @@ async function removeSupplier(id: number) {
     cancelButtonText: "Cancelar"
   }).then((result) => {
     if (result.isConfirmed) {
-      axios.delete(`/api/suppliers/${id}`)
+          SupplierService.delete(id)
           .then(() => {
             emit('submitSuccess',);
             Swal.fire({

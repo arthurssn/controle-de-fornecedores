@@ -4,6 +4,7 @@ import {reactive} from "vue";
 import axios from "axios";
 import Swal from 'sweetalert2'
 import FormSupplier from "@/Pages/Home/components/FormSupplier.vue";
+import SupplierService from "@/services/SupplierService";
 
 defineProps({
   modalOpen: {
@@ -27,7 +28,7 @@ const form: ISupplier = reactive({
 })
 
 function createSupplier() {
-  axios.post('/api/suppliers', form)
+  SupplierService.create(form)
       .then(() => {
         emit('update:modalOpen', false);
         Swal.fire('Sucesso', 'Fornecedor cadastrado com sucesso!', 'success');

@@ -4,6 +4,7 @@ import {PropType, Ref, ref, UnwrapRef, watch} from "vue";
 import axios from "axios";
 import Swal from 'sweetalert2'
 import FormSupplier from "@/Pages/Home/components/FormSupplier.vue";
+import SupplierService from "@/services/SupplierService";
 
 const props = defineProps({
     modalOpen: {
@@ -22,11 +23,11 @@ const form: Ref<UnwrapRef<ISupplier>> = ref({} as ISupplier)
 
 watch(() => props.supplier, (value) => {
     if (Object.keys(value).length)
-        form.value = value;
+        form.value = {...value};
 }, {deep: true})
 
 function updateSupplier() {
-    axios.put(`/api/suppliers/${form.value.id}`, form.value)
+    SupplierService.update(form.value?.id ?? 0, form.value)
         .then(() => {
             emit('update:modalOpen', false);
             Swal.fire('Sucesso', 'Fornecedor atualizado com sucesso!', 'success');
