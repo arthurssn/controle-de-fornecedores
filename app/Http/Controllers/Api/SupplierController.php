@@ -19,6 +19,7 @@ class SupplierController extends Controller
 
     public function index(FindSupplierRequest $request)
     {
+        sleep(1);
         try {
             $suppliersData = $this->service->getAll($request->all());
             if (isset($suppliersData['qsa'])) {
